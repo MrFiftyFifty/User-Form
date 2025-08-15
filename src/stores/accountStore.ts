@@ -53,7 +53,7 @@ export const useAccountStore = defineStore(
         account.type = formData.type
         account.login = formData.login
         
-        // Apply password logic based on account type
+        // Применяем логику пароля в зависимости от типа записи
         if (formData.type === 'LDAP') {
           account.password = null
         } else {

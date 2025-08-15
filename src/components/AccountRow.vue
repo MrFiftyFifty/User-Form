@@ -1,7 +1,7 @@
 <template>
   <div class="account-row">
     <div class="row-content">
-      <!-- Label field -->
+      <!-- Поле метки -->
       <div class="field-wrapper">
         <el-tooltip
           content="Разделяйте метки точкой с запятой (например: метка1; метка2; метка3)"
@@ -18,7 +18,7 @@
         <div v-if="errors.label" class="error-message">{{ errors.label }}</div>
       </div>
 
-      <!-- Record Type field -->
+      <!-- Поле выбора типа записи -->
       <div class="field-wrapper">
         <el-select
           v-model="formData.type"
@@ -30,7 +30,7 @@
         </el-select>
       </div>
 
-      <!-- Login field -->
+      <!-- Поле логина -->
       <div class="field-wrapper login-wrapper" :class="{ 'span-two': !showPasswordField }">
         <el-input
           v-model="formData.login"
@@ -42,7 +42,7 @@
         <div v-if="errors.login" class="error-message">{{ errors.login }}</div>
       </div>
 
-      <!-- Password field -->
+      <!-- Поле пароля -->
       <div v-if="showPasswordField" class="field-wrapper">
         <el-input
           v-model="formData.password"
@@ -56,7 +56,7 @@
         <div v-if="errors.password" class="error-message">{{ errors.password }}</div>
       </div>
 
-      <!-- Delete button -->
+      <!-- Кнопка удаления -->
       <div class="field-wrapper action-wrapper">
         <el-button
           type="danger"
@@ -100,7 +100,7 @@ const showPasswordField = computed(() => {
   return formData.value.type === 'Локальная'
 })
 
-// Load existing account data
+// Загружаем существующие данные учетной записи
 onMounted(() => {
   const existingData = accountStore.getAccountFormData(props.accountId)
   if (existingData) {
@@ -108,7 +108,7 @@ onMounted(() => {
   }
 })
 
-// Update store when type changes
+// Обновляем состояние в хранилище при изменении типа
 const handleTypeChange = () => {
   if (formData.value.type === 'LDAP') {
     formData.value.password = ''
@@ -149,7 +149,7 @@ const handleDelete = async () => {
     )
     accountStore.deleteAccount(props.accountId)
   } catch {
-    // User cancelled, do nothing
+    // Пользователь отменил действие — ничего не делаем
   }
 }
 </script>

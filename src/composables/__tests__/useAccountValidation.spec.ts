@@ -11,16 +11,16 @@ describe('useAccountValidation', () => {
 
   describe('validateField', () => {
     it('validates login field correctly', () => {
-      // Empty login should fail
+      // Пустой логин должен не проходить проверку
       expect(validation.validateField('login', '')).toBe(false)
       expect(validation.errors.login).toBe('Логин обязателен для заполнения')
 
-      // Valid login should pass
+      // Корректный логин должен проходить проверку
       validation.clearErrors()
       expect(validation.validateField('login', 'testuser')).toBe(true)
       expect(validation.errors.login).toBeUndefined()
 
-      // Login too long should fail
+      // Слишком длинный логин должен не проходить проверку
       validation.clearErrors()
       const longLogin = 'a'.repeat(101)
       expect(validation.validateField('login', longLogin)).toBe(false)
@@ -28,16 +28,16 @@ describe('useAccountValidation', () => {
     })
 
     it('validates password field for local accounts', () => {
-      // Empty password for local account should fail
+      // Пустой пароль для локальной записи должен не проходить проверку
       expect(validation.validateField('password', '', 'Локальная')).toBe(false)
       expect(validation.errors.password).toBe('Пароль обязателен для локальной учетной записи')
 
-      // Valid password should pass
+      // Корректный пароль должен проходить проверку
       validation.clearErrors()
       expect(validation.validateField('password', 'secret123', 'Локальная')).toBe(true)
       expect(validation.errors.password).toBeUndefined()
 
-      // Password too long should fail
+      // Слишком длинный пароль должен не проходить проверку
       validation.clearErrors()
       const longPassword = 'a'.repeat(101)
       expect(validation.validateField('password', longPassword, 'Локальная')).toBe(false)
@@ -45,21 +45,21 @@ describe('useAccountValidation', () => {
     })
 
     it('skips password validation for LDAP accounts', () => {
-      // Empty password for LDAP should pass
+      // Для LDAP пустой пароль допускается
       expect(validation.validateField('password', '', 'LDAP')).toBe(true)
       expect(validation.errors.password).toBeUndefined()
     })
 
     it('validates label field correctly', () => {
-      // Empty label should pass (it's optional)
+      // Пустая метка допускается (поле необязательное)
       expect(validation.validateField('label', '')).toBe(true)
       expect(validation.errors.label).toBeUndefined()
 
-      // Valid label should pass
+      // Корректная метка должна проходить проверку
       expect(validation.validateField('label', 'tag1; tag2')).toBe(true)
       expect(validation.errors.label).toBeUndefined()
 
-      // Label too long should fail
+      // Слишком длинная метка должна не проходить проверку
       const longLabel = 'a'.repeat(51)
       expect(validation.validateField('label', longLabel)).toBe(false)
       expect(validation.errors.label).toBe('Метка не должна превышать 50 символов')
@@ -84,8 +84,8 @@ describe('useAccountValidation', () => {
         id: '1',
         labelText: '',
         type: 'Локальная',
-        login: '', // Missing required login
-        password: '' // Missing required password for local account
+        login: '', // Отсутствует обязательный логин
+        password: '' // Отсутствует обязательный пароль для локальной записи
       }
 
       expect(validation.validateAccount(invalidAccount)).toBe(false)

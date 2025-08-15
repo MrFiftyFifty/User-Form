@@ -12,11 +12,11 @@ import router from './router'
 
 const app = createApp(App)
 
-// Configure Pinia with persistence
+// Настраиваем Pinia с сохранением состояния
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 
-// Register Element Plus icons
+// Регистрируем иконки Element Plus
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }

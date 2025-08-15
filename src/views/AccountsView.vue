@@ -146,7 +146,7 @@ const handleAddAccount = () => {
   padding: 60px 20px;
 }
 
-/* Transition animations */
+/* Анимации переходов */
 .account-enter-active,
 .account-leave-active {
   transition: all 0.3s ease;

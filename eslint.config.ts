@@ -4,10 +4,10 @@ import pluginVue from 'eslint-plugin-vue'
 import pluginVitest from '@vitest/eslint-plugin'
 import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
 
-// To allow more languages other than `ts` in `.vue` files, uncomment the following lines:
+// Чтобы разрешить другие языки помимо `ts` в файлах `.vue`, раскомментируйте строки ниже:
 // import { configureVueProject } from '@vue/eslint-config-typescript'
 // configureVueProject({ scriptLangs: ['ts', 'tsx'] })
-// More info at https://github.com/vuejs/eslint-config-typescript/#advanced-setup
+// Подробнее: https://github.com/vuejs/eslint-config-typescript/#advanced-setup
 
 export default defineConfigWithVueTs(
   {
