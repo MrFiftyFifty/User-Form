@@ -86,7 +86,7 @@ interface Props {
 const props = defineProps<Props>()
 
 const accountStore = useAccountStore()
-const { errors, validateField } = useAccountValidation()
+const { errors, validateField, validateAccount } = useAccountValidation()
 
 const formData = ref<AccountFormData>({
   id: props.accountId,
@@ -108,27 +108,34 @@ onMounted(() => {
   }
 })
 
+// Пытаемся сохранить изменения только если вся форма валидна
+const attemptSaveIfValid = () => {
+  if (validateAccount(formData.value)) {
+    updateAccount()
+  }
+}
+
 // Обновляем состояние в хранилище при изменении типа
 const handleTypeChange = () => {
   if (formData.value.type === 'LDAP') {
     formData.value.password = ''
   }
-  updateAccount()
+  attemptSaveIfValid()
 }
 
 const handleLabelBlur = () => {
   validateField('label', formData.value.labelText)
-  updateAccount()
+  attemptSaveIfValid()
 }
 
 const handleLoginBlur = () => {
   validateField('login', formData.value.login)
-  updateAccount()
+  attemptSaveIfValid()
 }
 
 const handlePasswordBlur = () => {
   validateField('password', formData.value.password, formData.value.type)
-  updateAccount()
+  attemptSaveIfValid()
 }
 
 const updateAccount = () => {
