@@ -31,7 +31,7 @@
       </div>
 
       <!-- Login field -->
-      <div class="field-wrapper">
+      <div class="field-wrapper login-wrapper" :class="{ 'span-two': !showPasswordField }">
         <el-input
           v-model="formData.login"
           placeholder="Введите логин"
@@ -43,9 +43,8 @@
       </div>
 
       <!-- Password field -->
-      <div class="field-wrapper">
+      <div v-if="showPasswordField" class="field-wrapper">
         <el-input
-          v-if="showPasswordField"
           v-model="formData.password"
           type="password"
           placeholder="Введите пароль"
@@ -54,9 +53,6 @@
           show-password
           clearable
         />
-        <div v-else class="hidden-field">
-          <span class="hidden-text">Скрыто для LDAP</span>
-        </div>
         <div v-if="errors.password" class="error-message">{{ errors.password }}</div>
       </div>
 
@@ -180,6 +176,11 @@ const handleDelete = async () => {
   position: relative;
 }
 
+/* При LDAP логин занимает 2 колонки (логин+пароль) */
+.login-wrapper.span-two {
+  grid-column: 3 / span 2;
+}
+
 .error-message {
   color: #f56c6c;
   font-size: 12px;
@@ -187,21 +188,6 @@ const handleDelete = async () => {
   line-height: 1.2;
 }
 
-.hidden-field {
-  height: 32px;
-  display: flex;
-  align-items: center;
-  padding: 0 12px;
-  background: #f5f7fa;
-  border: 1px solid #dcdfe6;
-  border-radius: 4px;
-}
-
-.hidden-text {
-  color: #909399;
-  font-size: 14px;
-  font-style: italic;
-}
 
 .action-wrapper {
   display: flex;

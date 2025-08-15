@@ -29,11 +29,11 @@
 
     <div class="accounts-section">
       <div class="field-labels">
-        <div class="label-grid">
+        <div class="label-grid" :class="{ 'ldap-layout': !hasLocalAccounts }">
           <span>Метка</span>
           <span>Тип записи</span>
           <span>Логин</span>
-          <span>Пароль</span>
+          <span v-if="hasLocalAccounts">Пароль</span>
           <span></span>
         </div>
       </div>
@@ -55,11 +55,19 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
 import { useAccountStore } from '@/stores/accountStore'
 import AccountRow from '@/components/AccountRow.vue'
 
 const accountStore = useAccountStore()
+
+const hasLocalAccounts = computed(() => {
+  return accountStore.accounts.some(account => {
+    const formData = accountStore.getAccountFormData(account.id)
+    return formData?.type === 'Локальная'
+  })
+})
 
 const handleAddAccount = () => {
   accountStore.addAccount()
@@ -124,6 +132,10 @@ const handleAddAccount = () => {
   font-weight: 600;
   color: #606266;
   font-size: 14px;
+}
+
+.label-grid.ldap-layout {
+  grid-template-columns: 1fr 150px 400px 60px;
 }
 
 .accounts-list {
